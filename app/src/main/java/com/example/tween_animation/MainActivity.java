@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
@@ -15,7 +16,7 @@ import android.widget.ImageView;
 public class MainActivity extends AppCompatActivity {
 
     ImageView iv;
-    Button tran, rota, scal, alph;
+    Button tran, rota, scal, alph, aset;
     View.OnClickListener cl;
     Animation ani;
 
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         iv = (ImageView)findViewById(R.id.image);
 
+
+        aset = (Button)findViewById(R.id.aniset);
         tran = (Button)findViewById(R.id.translate);
         rota = (Button)findViewById(R.id.rotate);
         scal = (Button)findViewById(R.id.scale);
@@ -72,7 +75,42 @@ public class MainActivity extends AppCompatActivity {
                         ani.setDuration(4000);
                         iv.setAnimation(ani);
                         break;
+                    case R.id.aniset:
+                        Animation a1, a2, a3, a4;
+                        AnimationSet as;
 
+                        a1 = new TranslateAnimation(
+                                Animation.RELATIVE_TO_SELF,0f, //시작 x축 위치
+                                Animation.RELATIVE_TO_SELF,1f, //도착 x축 위치
+                                Animation.RELATIVE_TO_SELF,0f, //시작 y축 위치
+                                Animation.RELATIVE_TO_SELF,1f ); //도착 y축 위치
+                        a1.setDuration(5000);
+
+                        a2 = new RotateAnimation(0,360,
+                                Animation.RELATIVE_TO_SELF,0.5f,
+                                Animation.RELATIVE_TO_SELF,0.5f);
+                        a2.setDuration(5000);
+
+                        a3 = new ScaleAnimation(1f,0f,1f,0f,
+                                Animation.RELATIVE_TO_SELF, 1f,
+                                Animation.RELATIVE_TO_SELF, 0.5f);
+                        a3.setDuration(5000);
+
+                        a4 = new AlphaAnimation(0f, 1f);
+                        a4.setDuration(5000);
+
+                        //iv.startAnimation(a1);
+                        //iv.startAnimation(a2);
+                        //iv.startAnimation(a3);
+                        //iv.startAnimation(a4);
+
+                        as = new AnimationSet(true);
+                        as.addAnimation(a1);
+                        as.addAnimation(a2);
+                        as.addAnimation(a3);
+                        as.addAnimation(a4);
+                        iv.startAnimation(as);
+                        break;
                 }
             }
         };
@@ -80,5 +118,6 @@ public class MainActivity extends AppCompatActivity {
         rota.setOnClickListener(cl);
         scal.setOnClickListener(cl);
         alph.setOnClickListener(cl);
+        aset.setOnClickListener(cl);
     }
 }
